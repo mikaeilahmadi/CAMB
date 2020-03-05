@@ -32,6 +32,7 @@ jobs:
             - sourceline: "ppa:ubuntu-toolchain-r/test"
           packages:
             - gfortran-9
+            - gcc-9
       env:
         - GCC_VERSION="9"
         - CHANNEL="conda-forge"
