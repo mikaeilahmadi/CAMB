@@ -27,6 +27,19 @@ jobs:
         - PYDIST="ANACONDA"
         - FORTRAN="test"
       python: "3.7"
+    - name: "GCC 9 + Python 3.7"
+      addons:
+        apt:
+          sources:
+            - sourceline: "ppa:ubuntu-toolchain-r/test"
+          packages:
+            - gfortran-9
+      env:
+        - GCC_VERSION="9"
+        - CHANNEL="defaults"
+        - PYDIST="ANACONDA"
+        - FORTRAN="test"
+      python: "3.7"
     - name: "GCC 8.3.1 cosmobox"
       language: sh
       services:
