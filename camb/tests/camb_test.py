@@ -658,3 +658,26 @@ class CambTest(unittest.TestCase):
 
         Bom = postborn.get_field_rotation_BB(pars, lmax=3500)
         self.assertAlmostEqual(Bom(100) * 2 * np.pi / 100 / 101., 1.65e-11, delta=1e-12)
+
+    def test_resources(self):
+        import gc
+        import resource
+
+        for i in range(1000):
+            if i%100==0:
+                print('Element ', i)
+            # initialize CAMB:
+            pars = camb.CAMBparams()
+            pars.set_cosmology( H0=70,
+                                ombh2=0.022, omch2=0.12,
+                                mnu=0.06,
+                                omk=0,
+                                tau=0.17)
+            # get derived parameters:
+            results = camb.get_background(pars)
+            # clean up:
+            del pars, results
+            gc.collect()
+            if i%100==0:
+                print('Memory usage: % 2.2f MB' % round(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/1024.0/1024.0,1) )
+        raise Exception("Check done")
