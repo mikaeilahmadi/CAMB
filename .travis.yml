@@ -14,31 +14,7 @@ branches:
 
 jobs:
   include:
-    - name: "GCC6 + Python 3.7"
-      addons:
-        apt:
-          packages:
-            - gfortran-6
-      env:
-        - GCC_VERSION="6"
-        - CHANNEL="defaults"
-        - PYDIST="ANACONDA"
-        - FORTRAN="test"
-      python: "3.7"
-    - name: "GCC9 + Python 3.8"
-      addons:
-        apt:
-          sources:
-            - sourceline: "ppa:ubuntu-toolchain-r/test"
-          packages:
-            - gfortran-9
-      env:
-        - GCC_VERSION="9"
-        - CHANNEL="conda-forge"
-        - PYDIST="ANACONDA"
-        - FORTRAN="test"
-      python: "3.8"
-    - name: "GCC8 + Python 3.7"
+    - name: "GCC 8.3.0 + Python 3.7"
       addons:
         apt:
           sources:
@@ -51,13 +27,7 @@ jobs:
         - PYDIST="ANACONDA"
         - FORTRAN="test"
       python: "3.7"
-    - name: "Ubuntu 18.04 + Python 3.6"
-      addons:
-        apt:
-          packages:
-            - gfortran
-      python: "3.6"
-    - name: "GCC 8 cosmobox"
+    - name: "GCC 8.3.1 cosmobox"
       language: sh
       services:
         - docker
@@ -67,18 +37,6 @@ jobs:
         - chmod +x fortran/tests/run_tests.sh
       script:
         - docker run -v $(pwd):/camb  -t cmbant/cosmobox:gcc8 /bin/bash -c "cd /camb; fortran/tests/run_tests.sh"
-      after_failure:
-        - echo "docker fail"
-    - name: "GCC 9 cosmobox"
-      language: sh
-      services:
-        - docker
-      before_install:
-        - docker pull cmbant/cosmobox:gcc9
-      install:
-        - chmod +x fortran/tests/run_tests.sh
-      script:
-        - docker run -v $(pwd):/camb  -t cmbant/cosmobox:gcc9 /bin/bash -c "cd /camb; fortran/tests/run_tests.sh"
       after_failure:
         - echo "docker fail"
     - name: "GCC trunk cosmobox"
@@ -93,8 +51,6 @@ jobs:
         - docker run -v $(pwd):/camb  -t cmbant/cosmobox:devel /bin/bash -c "cd /camb; fortran/tests/run_tests.sh"
       after_failure:
         - echo "docker fail"
-  allow_failures:
-        - name: "GCC9 + Python 3.8"
 
 install:
   - if [[ "$FORTRAN" == "test" ]]; then
