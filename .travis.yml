@@ -38,6 +38,19 @@ jobs:
         - PYDIST="ANACONDA"
         - FORTRAN="test"
       python: "3.8"
+    - name: "GCC8 + Python 3.7"
+      addons:
+        apt:
+          sources:
+            - sourceline: "ppa:ubuntu-toolchain-r/test"
+          packages:
+            - gfortran-8
+      env:
+        - GCC_VERSION="8"
+        - CHANNEL="defaults"
+        - PYDIST="ANACONDA"
+        - FORTRAN="test"
+      python: "3.7"
     - name: "Ubuntu 18.04 + Python 3.6"
       addons:
         apt:
